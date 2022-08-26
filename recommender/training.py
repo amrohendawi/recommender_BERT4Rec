@@ -101,7 +101,7 @@ def train(
     val_loader = DataLoader(
         val_data,
         batch_size=batch_size,
-        # num_workers=4,
+        # num_workers=10,
         shuffle=False,
     )
 
