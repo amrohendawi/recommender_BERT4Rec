@@ -12,14 +12,12 @@ from recommender.data_processing import get_context, pad_list, map_column, MASK
 
 
 def mask_list(l1, p=0.8):
-
     l1 = [a if random.random() < p else MASK for a in l1]
 
     return l1
 
 
 def mask_last_elements_list(l1, val_context_size: int = 5):
-
     l1 = l1[:-val_context_size] + mask_list(l1[-val_context_size:], p=0.5)
 
     return l1
@@ -61,12 +59,12 @@ class Dataset(torch.utils.data.Dataset):
 
 
 def train(
-    data_csv_path: str,
-    log_dir: str = "recommender_logs",
-    model_dir: str = "recommender_models",
-    batch_size: int = 32,
-    epochs: int = 2000,
-    history_size: int = 120,
+        data_csv_path: str,
+        log_dir: str = "recommender_logs",
+        model_dir: str = "recommender_models",
+        batch_size: int = 32,
+        epochs: int = 2000,
+        history_size: int = 120,
 ):
     data = pd.read_csv(data_csv_path)
 
@@ -97,13 +95,13 @@ def train(
     train_loader = DataLoader(
         train_data,
         batch_size=batch_size,
-        num_workers=10,
+        # num_workers=10,
         shuffle=True,
     )
     val_loader = DataLoader(
         val_data,
         batch_size=batch_size,
-        num_workers=10,
+        # num_workers=4,
         shuffle=False,
     )
 

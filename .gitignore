@@ -3,6 +3,13 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+*.zip
+
+recommender/recommender_logs/
+recommender/recommender_models/
+
+data/*
+
 # C extensions
 *.so
 
