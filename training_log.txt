@@ -1,0 +1,28 @@
+len(train_data) 162541
+len(val_data) 162541
+GPU available: True, used: True
+TPU available: False, using: 0 TPU cores
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name                | Type               | Params
+-----------------------------------------------------------
+0 | item_embeddings     | Embedding          | 7.6 M 
+1 | input_pos_embedding | Embedding          | 65.5 K
+2 | encoder             | TransformerEncoder | 3.6 M 
+3 | linear_out          | Linear             | 7.6 M 
+4 | do                  | Dropout            | 0     
+-----------------------------------------------------------
+18.8 M    Trainable params
+0         Non-trainable params
+18.8 M    Total params
+75.197    Total estimated model params size (MB)
+Epoch 52:   4%|███▍                                                                                      | 388/10160 [00:47<19:44,  8.25it/s, loss=5.45, v_num=2]^C/home/jovyan/recommender_BERT4Rec/venv/lib/python3.9/site-packages/pytorch_lightning/utilities/distributed.py:68: UserWarning: Detected KeyboardInterrupt, attempting graceful shutdown...
+  warnings.warn(*args, **kwargs)
+Epoch 52:   4%|███▍                                                                                      | 388/10160 [00:47<19:50,  8.21it/s, loss=5.45, v_num=2]
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+Testing: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████| 5080/5080 [03:04<00:00, 27.53it/s]
+--------------------------------------------------------------------------------
+DATALOADER:0 TEST RESULTS
+{'test_accuracy': 0.02938857674598694, 'test_loss': 6.305196285247803}
+--------------------------------------------------------------------------------
+{'val_loss': 6.305196285247803, 'best_model_path': '/home/jovyan/recommender_BERT4Rec/recommender_models/recommender-v2.ckpt'}
