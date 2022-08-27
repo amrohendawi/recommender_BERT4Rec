@@ -6,10 +6,35 @@ This is a demonstration of the BERT4Rec model from the [BERT4Rec paper](https://
 
 Tested on NVIDIA RTX 3070 with CUDA 11.6 and Python 3.9.13
 
+#### 1. Create a virtual environment:
+
 ```
 python -m venv venv
+```
 
-source venv/Scripts/activate
+#### 2. Activate the virtual environment:
+
+<details>
+  <summary>For Linux</summary>
+
+  ```
+  source venv/bin/activate
+  ```
+
+</details>
+
+<details>
+  <summary>For Powershell</summary>
+
+  ```
+  .\venv\Scripts\activate
+  ```
+
+</details>
+
+#### 3. Install the dependencies:
+
+```
 pip install -r requirements.txt
 ```
 
