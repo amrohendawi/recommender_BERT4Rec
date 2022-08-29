@@ -45,7 +45,7 @@ pip install -r requirements.txt
 3. Run the following command to train the model:
 
 ```
-python3  recommender/training.py --data_dir <path-to-the-data>
+python3  recommender/training.py --data_csv_path <path-to-the-data>
 ```
 
 ### Docker (CPU)
