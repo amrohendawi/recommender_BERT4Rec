@@ -1,12 +1,11 @@
 import torch
+from recommender.BERT4Rec import BERT4Rec
 
-from recommender.models import Recommender
 
-
-def test_recommender():
+def test_bert4rec():
     n_items = 1000
 
-    recommender = Recommender(vocab_size=1000)
+    model = BERT4Rec(vocab_size=1000)
 
     src_items = torch.randint(low=0, high=n_items, size=(32, 30))
 
@@ -14,11 +13,11 @@ def test_recommender():
 
     trg_out = torch.randint(low=0, high=n_items, size=(32, 30))
 
-    out = recommender(src_items)
+    out = model(src_items)
 
     assert out.shape == torch.Size([32, 30, 1000])
 
-    loss = recommender.training_step((src_items, trg_out), batch_idx=1)
+    loss = model.training_step((src_items, trg_out), batch_idx=1)
 
     assert isinstance(loss, torch.Tensor)
 

@@ -8,7 +8,6 @@ from torch.nn import functional as F
 
 
 def masked_accuracy(y_pred: torch.Tensor, y_true: torch.Tensor, mask: torch.Tensor):
-
     _, predicted = torch.max(y_pred, 1)
 
     y_true = torch.masked_select(y_true, mask)
@@ -20,7 +19,6 @@ def masked_accuracy(y_pred: torch.Tensor, y_true: torch.Tensor, mask: torch.Tens
 
 
 def masked_ce(y_pred, y_true, mask):
-
     loss = F.cross_entropy(y_pred, y_true, reduction="none")
 
     loss = loss * mask
@@ -28,15 +26,15 @@ def masked_ce(y_pred, y_true, mask):
     return loss.sum() / (mask.sum() + 1e-8)
 
 
-class Recommender(pl.LightningModule):
+class BERT4Rec(pl.LightningModule):
     def __init__(
-        self,
-        vocab_size,
-        channels=128,
-        cap=0,
-        mask=1,
-        dropout=0.4,
-        lr=1e-4,
+            self,
+            vocab_size,
+            channels=128,
+            cap=0,
+            mask=1,
+            dropout=0.4,
+            lr=1e-4,
     ):
         super().__init__()
 
@@ -83,7 +81,6 @@ class Recommender(pl.LightningModule):
         return src.permute(1, 0, 2)
 
     def forward(self, src_items):
-
         src = self.encode_src(src_items)
 
         out = self.linear_out(src)
