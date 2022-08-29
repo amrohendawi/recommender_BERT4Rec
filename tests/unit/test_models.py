@@ -17,7 +17,7 @@ def test_bert4rec():
 
     assert out.shape == torch.Size([32, 30, 1000])
 
-    loss = model.training_step((src_items, trg_out), batch_idx=1)
+    loss = model.do_step((src_items, trg_out), batch_idx=1, phase="training")
 
     assert isinstance(loss, torch.Tensor)
 

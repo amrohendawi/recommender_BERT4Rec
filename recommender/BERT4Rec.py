@@ -20,7 +20,6 @@ def masked_accuracy(y_pred: torch.Tensor, y_true: torch.Tensor, mask: torch.Tens
 
 def masked_ce(y_pred, y_true, mask):
     loss = F.cross_entropy(y_pred, y_true, reduction="none")
-
     loss = loss * mask
 
     return loss.sum() / (mask.sum() + 1e-8)
@@ -45,10 +44,7 @@ class BERT4Rec(pl.LightningModule):
         self.dropout = dropout
         self.vocab_size = vocab_size
 
-        self.item_embeddings = torch.nn.Embedding(
-            self.vocab_size, embedding_dim=channels
-        )
-
+        self.item_embeddings = torch.nn.Embedding(self.vocab_size, embedding_dim=channels)
         self.input_pos_embedding = torch.nn.Embedding(512, embedding_dim=channels)
 
         encoder_layer = nn.TransformerEncoderLayer(
@@ -56,9 +52,7 @@ class BERT4Rec(pl.LightningModule):
         )
 
         self.encoder = torch.nn.TransformerEncoder(encoder_layer, num_layers=6)
-
         self.linear_out = Linear(channels, self.vocab_size)
-
         self.do = nn.Dropout(p=self.dropout)
 
     def encode_src(self, src_items):
@@ -73,21 +67,18 @@ class BERT4Rec(pl.LightningModule):
         pos_encoder = self.input_pos_embedding(pos_encoder)
 
         src_items += pos_encoder
-
         src = src_items.permute(1, 0, 2)
-
         src = self.encoder(src)
 
         return src.permute(1, 0, 2)
 
     def forward(self, src_items):
         src = self.encode_src(src_items)
-
         out = self.linear_out(src)
 
         return out
 
-    def training_step(self, batch, batch_idx):
+    def do_step(self, batch, batch_idx, phase="training"):
         src_items, y_true = batch
 
         y_pred = self(src_items)
@@ -101,46 +92,8 @@ class BERT4Rec(pl.LightningModule):
         loss = masked_ce(y_pred=y_pred, y_true=y_true, mask=mask)
         accuracy = masked_accuracy(y_pred=y_pred, y_true=y_true, mask=mask)
 
-        self.log("train_loss", loss)
-        self.log("train_accuracy", accuracy)
-
-        return loss
-
-    def validation_step(self, batch, batch_idx):
-        src_items, y_true = batch
-
-        y_pred = self(src_items)
-
-        y_pred = y_pred.view(-1, y_pred.size(2))
-        y_true = y_true.view(-1)
-
-        src_items = src_items.view(-1)
-        mask = src_items == self.mask
-
-        loss = masked_ce(y_pred=y_pred, y_true=y_true, mask=mask)
-        accuracy = masked_accuracy(y_pred=y_pred, y_true=y_true, mask=mask)
-
-        self.log("valid_loss", loss)
-        self.log("valid_accuracy", accuracy)
-
-        return loss
-
-    def test_step(self, batch, batch_idx):
-        src_items, y_true = batch
-
-        y_pred = self(src_items)
-
-        y_pred = y_pred.view(-1, y_pred.size(2))
-        y_true = y_true.view(-1)
-
-        src_items = src_items.view(-1)
-        mask = src_items == self.mask
-
-        loss = masked_ce(y_pred=y_pred, y_true=y_true, mask=mask)
-        accuracy = masked_accuracy(y_pred=y_pred, y_true=y_true, mask=mask)
-
-        self.log("test_loss", loss)
-        self.log("test_accuracy", accuracy)
+        self.log(f"{phase}_loss", loss)
+        self.log(f"{phase}_accuracy", accuracy)
 
         return loss
 
