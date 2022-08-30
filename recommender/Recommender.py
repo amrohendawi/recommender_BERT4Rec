@@ -13,6 +13,7 @@ class Recommender:
         self.idx_to_movie = None
         self.movie_to_idx = None
         self.model = None
+        self.movies = None
 
     def prepare_model(self, model_path, movies_path="data/ml-25m/movies.csv", ratings_path="data/ml-25m/ratings.csv"):
         ratings = pd.read_csv(ratings_path)
@@ -28,12 +29,15 @@ class Recommender:
         self.model.eval()
         self.model.load_state_dict(torch.load(model_path)["state_dict"])
 
-        movies = pd.read_csv(movies_path)
-        self.movie_to_idx = {a: mapping[b] for a, b in zip(movies.title.tolist(), movies.movieId.tolist()) if
+        self.movies = pd.read_csv(movies_path)
+        self.movie_to_idx = {a: mapping[b] for a, b in zip(self.movies.title.tolist(), self.movies.movieId.tolist()) if
                              b in mapping}
         self.idx_to_movie = {v: k for k, v in self.movie_to_idx.items()}
 
     def predict(self, list_movies, top_n=10):
+        if self.movies is None:
+            raise Exception("Run prepare_model first before predicting")
+
         ids = [PAD] * (120 - len(list_movies) - 1) + [self.movie_to_idx[a] for a in list_movies] + [MASK]
         src = torch.tensor(ids, dtype=torch.long).unsqueeze(0)
 
