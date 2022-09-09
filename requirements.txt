@@ -4,7 +4,6 @@ matplotlib-inline==0.1.6
 numpy==1.23.2
 pandas==1.4.3
 pytest==7.1.2
-<<<<<<< HEAD
 python-dateutil==2.8.2
 pytorch-lightning==1.2.8
 pytz==2022.2.1
@@ -25,9 +24,7 @@ tensorboard-plugin-wit==1.8.1
 terminado==0.15.0
 tinycss2==1.1.1
 tomli==2.0.1
-=======
 pytorch_lightning==1.2.8
->>>>>>> 81ed21bdaafb8ef3c207042e88070833ba1d92d3
 torch==1.12.1+cu116 --find-links https://download.pytorch.org/whl/cu116
 torchaudio==0.12.1+cu116 --find-links https://download.pytorch.org/whl/cu116
 torchvision==0.13.1+cu116 --find-links https://download.pytorch.org/whl/cu116
