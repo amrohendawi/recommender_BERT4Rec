@@ -2,6 +2,23 @@
 
 This is a demonstration of the BERT4Rec model from the [BERT4Rec paper](https://arxiv.org/abs/1904.06690).
 
+
+<!--  a sequence of movies as input and a recommendation as output -->
+```mermaid
+graph TD
+    A[User] -->|list: input watch history| B[Black Panther 2017\nThe Avengers 2012\n...\n Spider-Man 3]
+    A[User] -->|int: top n recommendations| B1[3]
+    B --> |convert movie strings to indices| B2[113, 22, .. 598]
+    B2 --> C{BERT4Rec\nMovies\nRecommender}
+    B1 --> C{BERT4Rec\nMovies\nRecommender}
+    C -->|list: integer| D1[13, 976, 49]
+    D1 --> |convert indices to movie strings| D[Thor: Ragnarok 2017\nDeadpool 2 2018\nIncredibles 2]
+```
+
+### How it works
+
+
+
 ### Setup (GPU)
 
 Tested on NVIDIA RTX 3070 with CUDA 11.6 and Python 3.9.13
