@@ -6,13 +6,13 @@ This is a demonstration of the BERT4Rec model from the [BERT4Rec paper](https://
 <!--  a sequence of movies as input and a recommendation as output -->
 ```mermaid
 graph TD
-    A[User] -->|list: input watch history| B[Black Panther 2017\nThe Avengers 2012\n...\n Spider-Man 3]
+    A[User] -->|list: input watch history| B[Black Panther 2017, The Avengers 2012, ...  Spider-Man 3]
     A[User] -->|int: top n recommendations| B1[3]
     B --> |convert movie strings to indices| B2[113, 22, .. 598]
-    B2 --> C{BERT4Rec\nMovies\nRecommender}
-    B1 --> C{BERT4Rec\nMovies\nRecommender}
+    B2 --> C{BERT4Rec Movies Recommender}
+    B1 --> C{BERT4Rec Movies Recommender}
     C -->|list: integer| D1[13, 976, 49]
-    D1 --> |convert indices to movie strings| D[Thor: Ragnarok 2017\nDeadpool 2 2018\nIncredibles 2]
+    D1 --> |convert indices to movie strings| D[Thor: Ragnarok 2017, Deadpool 2 2018, Incredibles 2]
 ```
 
 ### How it works
